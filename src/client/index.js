@@ -4,14 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import routes from '../Routes'
 import { Provider } from 'react-redux'
 import { getClientStore } from '../store'
+import { renderRoutes } from 'react-router-config'
 const App = () => (
   <Provider store={getClientStore()}>
     <BrowserRouter>
-      <Switch>
-        {routes.map((route, key) => {
-          return <Route {...route} key={key}/>
-        })}
-      </Switch>
+      <Switch>{renderRoutes(routes)}</Switch>
     </BrowserRouter>
   </Provider>
 )

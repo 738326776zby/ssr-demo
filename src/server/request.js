@@ -3,7 +3,7 @@ const instance = axios.create({
   baseURL: 'http://posting-api.jiedaibao.com',
   headers:{
     common:{
-        utoken:'1e9154a7-e314-478e-8765-87aaefc52366'
+        utoken:'9fca6114-97e4-4dce-a424-6cfc835b65b6'
     }
   }
 })

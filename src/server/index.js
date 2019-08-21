@@ -10,7 +10,6 @@ app.use(
   '/api',
   proxy('http://posting-api.jiedaibao.com', {
     proxyReqPathResolver: function(req) {
-      console.log(req.url)
       return new Promise(function(resolve, reject) {
         setTimeout(function() {
           resolve(req.url)
