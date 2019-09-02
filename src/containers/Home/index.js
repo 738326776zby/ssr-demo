@@ -8,7 +8,7 @@ export class Home extends Component {
     const { name, newList } = this.props
     return (
       <Fragment>
-        <Header />
+      
         <div>我是子1组件</div>
         {newList.map((item, index) => (
           <span key={index}>{item.get('dwmc')}||</span>
