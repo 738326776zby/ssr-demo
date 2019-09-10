@@ -21,15 +21,34 @@ app.use(
 app.use(express.static('public'))
 app.get('*', (req, res) => {
   const store = getStore()
-  const promise = []
+  const promises = []
   const matchedRoutes = matchRoutes(routes, req.path)
+  // 获取路由项对应的组件
   matchedRoutes.forEach(item => {
-    item.route.loadData && promise.push(item.route.loadData(store))
+    if(item.route.loadData){
+      const promise = new Promise((resolve,reject)=>{
+        item.route.loadData(store).then(resolve).catch(resolve)
+      })
+      promises.push(promise)
+    }
   })
 
-  Promise.all(promise).then(res2 => {
-    res.send(render(store, req, routes))
-  })
+  Promise.all(promises)
+    .then(res2 => {
+      const context = {
+        css:[]
+      }
+      const html = render(store, req, routes, context)
+      
+      if (context.action === 'REPLACE') {
+        res.redirect(301, context.url)
+      } else if (context.NOT_FOUND) {
+        res.status(404)
+        res.send(html)
+      } else {
+        res.send(html)
+      }
+    })
 })
 
 app.listen(3000)

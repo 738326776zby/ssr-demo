@@ -3,19 +3,19 @@ import React from 'react'
 import { StaticRouter, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { renderRoutes } from 'react-router-config'
-export const render = (store, req, routes) => {
+export const render = (store, req, routes, context) => {
   const content = renderToString(
     <Provider store={store}>
-      <StaticRouter location={req.path} context={{}}>
-        <Switch>
-          {renderRoutes(routes)}
-        </Switch>
+      <StaticRouter location={req.path} context={context}>
+        <div>{renderRoutes(routes)}</div>
       </StaticRouter>
     </Provider>
   )
+  const cssStr = context.css.length ? context.css.join('\n') : ''
   return `<html>
       <head>
       <title>ssh</title>
+      <style>${cssStr}</style>
       </head>
       <body>
         <div id="root">
